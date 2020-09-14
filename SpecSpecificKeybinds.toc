@@ -1,0 +1,12 @@
+## Interface: 803000
+## Title: Specialization Specific Keybinds
+## Notes: Adds support for specialization specific keybinds
+## Author: myzb
+## Version: @project-version@
+## SavedVariablesPerCharacter: SpecSpecificKeybindsDB
+
+## X-Category: Action Bars
+## X-WoWI-ID: 0
+## X-Curse-Project-ID: 0
+
+SpecSpecificKeybinds.lua
