@@ -19,7 +19,6 @@ local function loadBindings(self)
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return
 	end
-	print(string.format('Loaded keybinds for spec %d: %s', spec, name))
 
 	for i = 1, GetNumBindings() do
 		local cmd, _, key1, key2 = GetBinding(i)
@@ -41,16 +40,18 @@ local function loadBindings(self)
 			end
 		end
 	end
+	addon.modified = true
 	SaveBindings(GetCurrentBindingSet())
+	addon.modified = false
+	print(string.format('Loaded keybinds for spec %d: %s', spec, name))
 end
 
-local function saveBindings(button)
+local function saveBindings()
+	if (addon.modified) then
+		return
+	end
 	local spec = GetSpecialization()
 	local _, name = GetSpecializationInfo(spec)
-
-	if (button == QuickKeybindFrame.okayButton or button:GetParent().bindingsChanged) then
-		print(string.format('Saved keybinds for spec %d: %s', spec, name))
-	end
 
 	local binds = {}
 	for i = 1, GetNumBindings() do
@@ -60,17 +61,12 @@ local function saveBindings(button)
 		end
 	end
 	addon.db[spec] = binds
+	print(string.format('Saved keybinds for spec %d: %s', spec, name))
 end
 
 function addon:OnEnable()
 	self:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED')
-end
-
-function addon:OnAddonLoaded(name)
-	if (name == 'Blizzard_BindingUI') then
-		KeyBindingFrame.okayButton:HookScript('OnClick', saveBindings)
-		QuickKeybindFrame.okayButton:HookScript('OnClick', saveBindings)
-	end
+	hooksecurefunc('SaveBindings', saveBindings)
 end
 
 function events:PLAYER_REGEN_ENABLED(...)
@@ -97,14 +93,12 @@ function events:ADDON_LOADED(...)
 		end
 		self.db = _G[self.dbName]
 		self:OnEnable()
-	else
-		self:OnAddonLoaded(name)
 	end
 end
 
-function addon:Initialize(db, ev)
-	self.events = ev
-	self.dbName = db
+function addon:Initialize(dbName, events)
+	self.events = events
+	self.dbName = dbName
 
 	-- do not register everything just yet
 	self:RegisterEvent('ADDON_LOADED')
