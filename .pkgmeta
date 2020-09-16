@@ -1,0 +1,4 @@
+package-as: SpecSpecificKeybinds
+
+ignore:
+  - README.md
