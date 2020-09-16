@@ -6,7 +6,7 @@
 ## SavedVariablesPerCharacter: SpecSpecificKeybindsDB
 
 ## X-Category: Action Bars
-## X-WoWI-ID: 0
-## X-Curse-Project-ID: 0
+## X-WoWI-ID: 25679
+## X-Curse-Project-ID: 408393
 
 SpecSpecificKeybinds.lua

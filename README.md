@@ -1,7 +1,7 @@
 # Specialization Specific Keybinds
 
-An addon for World of Warcraft that enables per-specialization key binding support. It is useful if you want to place
-spells for the active specialization freely on your action bars, without being constrained by the chosen key bindings.
+An addon for World of Warcraft that enables per-specialization key binding support. The current key binding layout
+will automatically change whenever the active specialization is changed.
 
 The addon is under 150 lines of code and tries to keep things simple. This means 1 key bind profile for each
 class specialization and no fancy extra options. The addon uses the standard key bindings menu to trigger it's actions.
