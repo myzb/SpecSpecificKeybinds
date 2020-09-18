@@ -8,15 +8,14 @@ local SetBinding, GetBinding = SetBinding, GetBinding
 -- > ADDON FUNCTIONS
 -- -----------------------------------------------------------------------------
 
-local function loadBindings(self)
-	local spec = GetSpecialization()
+local function loadBindings(spec)
 	local _, name = GetSpecializationInfo(spec)
 	local binds = addon.db.binds[spec]
-	if (not binds or addon.lastSpec == spec) then
+	if (not binds) then
 		return
 	end
 	if (InCombatLockdown()) then
-		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		addon:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return
 	end
 
@@ -62,6 +61,7 @@ local function saveBindings()
 		end
 	end
 	addon.db.binds[spec] = binds
+	addon.lastSpec = spec
 	print(string.format('Saved keybinds for spec %d: %s', spec, name))
 end
 
@@ -74,17 +74,21 @@ function addon:OnEnable()
 end
 
 function events:PLAYER_LOGIN(...)
+	self.lastSpec = GetSpecialization()
 	hooksecurefunc('SaveBindings', saveBindings)
 	self:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 end
 
 function events:PLAYER_REGEN_ENABLED(...)
 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	loadBindings()
+	loadBindings(GetSpecialization())
 end
 
 function events:ACTIVE_TALENT_GROUP_CHANGED(...)
-	loadBindings()
+	local spec = GetSpecialization()
+	if (self.lastSpec ~= spec) then
+		loadBindings(spec)
+	end
 end
 
 -- ---------------------
