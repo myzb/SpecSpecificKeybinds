@@ -3,22 +3,25 @@ local addon, events = CreateFrame('Frame', addonName), {}
 
 -- API Imports
 local SetBinding, GetBinding = SetBinding, GetBinding
+local GetSpecialization = GetSpecialization
 
 -- -----------------------------------------------------------------------------
 -- > ADDON FUNCTIONS
 -- -----------------------------------------------------------------------------
 
-local function loadBindings(spec)
+local function loadBindings(self, spec)
 	local _, name = GetSpecializationInfo(spec)
-	local binds = addon.db.binds[spec]
-	if (not binds) then
-		return
+	if (not self.db.binds[spec]) then
+		self.db.binds[spec] = self.db.binds[self.lastSpec]
 	end
+	local binds = self.db.binds[spec]
+
 	if (InCombatLockdown()) then
-		addon:RegisterEvent('PLAYER_REGEN_ENABLED')
+		self:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return
 	end
 
+	self:UnregisterEvent('UPDATE_BINDINGS')
 	for i = 1, GetNumBindings() do
 		local cmd, _, key1, key2 = GetBinding(i)
 		local newKey1, newKey2 = unpack(binds[cmd] or {})
@@ -39,18 +42,13 @@ local function loadBindings(spec)
 			end
 		end
 	end
-	addon.modified = true
 	SaveBindings(GetCurrentBindingSet())
-	addon.modified = false
-	addon.lastSpec = spec
+	self:RegisterEvent('UPDATE_BINDINGS')
+	self.lastSpec = spec
 	print(string.format('Loaded keybinds for spec %d: %s', spec, name))
 end
 
-local function saveBindings()
-	if (addon.modified) then
-		return
-	end
-	local spec = GetSpecialization()
+local function saveBindings(self, spec)
 	local _, name = GetSpecializationInfo(spec)
 
 	local binds = {}
@@ -60,8 +58,7 @@ local function saveBindings()
 			binds[cmd] = { key1, key2 }
 		end
 	end
-	addon.db.binds[spec] = binds
-	addon.lastSpec = spec
+	self.db.binds[spec] = binds
 	print(string.format('Saved keybinds for spec %d: %s', spec, name))
 end
 
@@ -74,21 +71,29 @@ function addon:OnEnable()
 end
 
 function events:PLAYER_LOGIN(...)
-	self.lastSpec = GetSpecialization()
-	hooksecurefunc('SaveBindings', saveBindings)
+	local spec = GetSpecialization()
+	if (not self.db.binds[spec]) then
+		saveBindings(self, spec)
+	end
+	self.lastSpec = spec
 	self:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+	self:RegisterEvent('UPDATE_BINDINGS')
 end
 
 function events:PLAYER_REGEN_ENABLED(...)
 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	loadBindings(GetSpecialization())
+	loadBindings(self, GetSpecialization())
 end
 
 function events:ACTIVE_TALENT_GROUP_CHANGED(...)
 	local spec = GetSpecialization()
 	if (self.lastSpec ~= spec) then
-		loadBindings(spec)
+		loadBindings(self, spec)
 	end
+end
+
+function events:UPDATE_BINDINGS(...)
+	saveBindings(self, GetSpecialization())
 end
 
 -- ---------------------
