@@ -11,7 +11,7 @@ local SetBinding, GetBinding = SetBinding, GetBinding
 local function loadBindings(self)
 	local spec = GetSpecialization()
 	local _, name = GetSpecializationInfo(spec)
-	local binds = addon.db[spec]
+	local binds = addon.db.binds[spec]
 	if (not binds or addon.lastSpec == spec) then
 		return
 	end
@@ -61,11 +61,15 @@ local function saveBindings()
 			binds[cmd] = { key1, key2 }
 		end
 	end
-	addon.db[spec] = binds
+	addon.db.binds[spec] = binds
 	print(string.format('Saved keybinds for spec %d: %s', spec, name))
 end
 
 function addon:OnEnable()
+	if (next(self.db) == nil) then
+		self.db.config = {}
+		self.db.binds = {}
+	end
 	self:RegisterEvent('PLAYER_LOGIN')
 end
 
