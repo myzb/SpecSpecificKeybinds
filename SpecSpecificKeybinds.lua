@@ -22,7 +22,7 @@ local function loadBindings(self)
 
 	for i = 1, GetNumBindings() do
 		local cmd, _, key1, key2 = GetBinding(i)
-		local newKey1, newKey2 = (binds[cmd] and unpack(binds[cmd]))
+		local newKey1, newKey2 = unpack(binds[cmd] or {})
 		if (key1 ~= newKey1) then
 			if (key1) then
 				SetBinding(key1) -- clear
@@ -32,7 +32,7 @@ local function loadBindings(self)
 			end
 		end
 		if (key2 ~= newKey2) then
-			if (key2) then
+			if (key2 and key2 ~= newKey1) then
 				SetBinding(key2) -- clear
 			end
 			if (newKey2) then
