@@ -45,12 +45,10 @@ local function loadBindings(self, spec)
 	SaveBindings(GetCurrentBindingSet())
 	self:RegisterEvent('UPDATE_BINDINGS')
 	self.lastSpec = spec
-	print(string.format('Loaded keybinds for spec %d: %s', spec, name))
+	print(string.format('|cffffff00Key Bindings set to Specialization: %s|r', name))
 end
 
 local function saveBindings(self, spec)
-	local _, name = GetSpecializationInfo(spec)
-
 	local binds = {}
 	for i = 1, GetNumBindings() do
 		local cmd, _, key1, key2 = GetBinding(i)
@@ -59,7 +57,6 @@ local function saveBindings(self, spec)
 		end
 	end
 	self.db.binds[spec] = binds
-	print(string.format('Saved keybinds for spec %d: %s', spec, name))
 end
 
 function addon:OnEnable()
