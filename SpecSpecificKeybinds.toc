@@ -5,6 +5,7 @@
 ## Version: @project-version@
 ## SavedVariablesPerCharacter: SpecSpecificKeybindsDB
 
+## X-SlashCmdList: /ssb
 ## X-Category: Action Bars
 ## X-WoWI-ID: 25679
 ## X-Curse-Project-ID: 408393

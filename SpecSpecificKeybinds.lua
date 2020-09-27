@@ -59,11 +59,34 @@ local function saveBindings(self, spec)
 	self.db.binds[spec] = binds
 end
 
+local function cmdHandler(msg, ...)
+	local actions = {
+		['help'] = function()
+			-- nothing for now
+		end,
+		['load'] = function(arg)
+			local spec = tonumber(arg)
+			if (not spec or spec < 1 or spec > GetNumSpecializations()) then
+				return
+			end
+			loadBindings(addon, spec)
+		end
+	}
+	local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
+	local func = actions[cmd] or actions['help']
+	func(args)
+end
+
 function addon:OnEnable()
 	if (next(self.db) == nil) then
 		self.db.config = {}
 		self.db.binds = {}
 	end
+	-- chat commands
+	local cmdName = GetAddOnMetadata(addonName, 'X-SlashCmdList'):gsub('%s+', '')
+	_G['SLASH_'.. cmdName .. '1'] = cmdName
+	SlashCmdList[cmdName] = cmdHandler
+
 	self:RegisterEvent('PLAYER_LOGIN')
 end
 
