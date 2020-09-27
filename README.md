@@ -16,9 +16,19 @@ per specialization and/or support for macro and talent profiles.
 
 1. **Loading Keybinds:** Activate the desired specialization using the in-game talent menu.
 
-_A confirmation message will be printed to the chat window whenever a set of key binds has been saved/loaded._
+_A message similar to the one bellow will be printed whenever key bindings change_
 
-**Note:** Specs that haven't been key bound yet will use the current set of key bindings as a template.
+![SpecSpecificKeybinds](https://i.imgur.com/Pi7GAol.jpg)
+
+**To manually load a key binding**
+
+Use the following chat command: ``/ssb load <spec-num>``  
+``spec-num`` is the specialization number to load. Usually a number between 1 and 3 (4 for druids). The numbering
+follows the order the specializations are listed in the games specialization menu.
+
+**Additional Info**
+
+Specs that haven't been key bound yet will use the current set of key bindings as a template.
 
 Key bindings will be saved locally within the __WTF__ folder of your game installation. Only the active key bindings
 are stored on the game server. The location of your saved key binds is:
