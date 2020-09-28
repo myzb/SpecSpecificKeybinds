@@ -24,7 +24,7 @@ _A message similar to the one bellow will be printed whenever key bindings chang
 
 Use the following chat command: ``/ssb load <spec-num>``  
 ``spec-num`` is the specialization number to load. Usually a number between 1 and 3 (4 for druids). The numbering
-follows the order the specializations are listed in the games specialization menu.
+follows the order the specializations are listed in the in-game talent menu.
 
 **Additional Info**
 
