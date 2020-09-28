@@ -15,10 +15,11 @@ local function loadBindings(self, spec)
 		self.db.binds[spec] = self.db.binds[self.lastSpec]
 	end
 	local binds = self.db.binds[spec]
+	self.lastSpec = spec
 
 	if (InCombatLockdown()) then
-		print(string.format('|cffffff00Key Bindings will be changed after combat ends.|r'))
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		print(string.format('|cffffff00Key Bindings will be changed after combat ends.|r'))
 		return
 	end
 
@@ -45,7 +46,6 @@ local function loadBindings(self, spec)
 	end
 	SaveBindings(GetCurrentBindingSet())
 	self:RegisterEvent('UPDATE_BINDINGS')
-	self.lastSpec = spec
 	print(string.format('|cffffff00Key Bindings set to Specialization: %s|r', name))
 end
 
@@ -103,7 +103,7 @@ end
 
 function events:PLAYER_REGEN_ENABLED(...)
 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	loadBindings(self, GetSpecialization())
+	loadBindings(self, self.lastSpec)
 end
 
 function events:ACTIVE_TALENT_GROUP_CHANGED(...)
