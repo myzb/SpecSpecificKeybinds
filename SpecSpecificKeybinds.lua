@@ -17,6 +17,7 @@ local function loadBindings(self, spec)
 	local binds = self.db.binds[spec]
 
 	if (InCombatLockdown()) then
+		print(string.format('|cffffff00Key Bindings will be changed after combat ends.|r'))
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return
 	end
