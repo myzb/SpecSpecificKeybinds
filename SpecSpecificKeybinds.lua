@@ -12,10 +12,10 @@ local GetSpecialization = GetSpecialization
 local function loadBindings(self, spec)
 	local _, name = GetSpecializationInfo(spec)
 	if (not self.db.binds[spec]) then
-		self.db.binds[spec] = self.db.binds[self.lastSpec]
+		self.db.binds[spec] = self.db.binds[self.spec]
 	end
 	local binds = self.db.binds[spec]
-	self.lastSpec = spec
+	self.spec = spec
 
 	if (InCombatLockdown()) then
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
@@ -96,19 +96,19 @@ function events:PLAYER_LOGIN(...)
 	if (not self.db.binds[spec]) then
 		saveBindings(self, spec)
 	end
-	self.lastSpec = spec
+	self.spec = spec
 	self:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 	self:RegisterEvent('UPDATE_BINDINGS')
 end
 
 function events:PLAYER_REGEN_ENABLED(...)
 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	loadBindings(self, self.lastSpec)
+	loadBindings(self, self.spec)
 end
 
 function events:ACTIVE_TALENT_GROUP_CHANGED(...)
 	local spec = GetSpecialization()
-	if (self.lastSpec ~= spec) then
+	if (self.spec ~= spec) then
 		loadBindings(self, spec)
 	end
 end
@@ -139,8 +139,8 @@ function addon:Initialize(dbName, events)
 	-- do not register everything just yet
 	self:RegisterEvent('ADDON_LOADED')
 
-	self:SetScript('OnEvent', function(self, event, ...)
-		events[event](self, ...)
+	self:SetScript('OnEvent', function(element, event, ...)
+		element.events[event](element, ...)
 	end)
 end
 
