@@ -87,7 +87,6 @@ function addon:OnEnable()
 	local cmdName = GetAddOnMetadata(addonName, 'X-SlashCmdList'):gsub('%s+', '')
 	_G['SLASH_'.. cmdName .. '1'] = cmdName
 	SlashCmdList[cmdName] = cmdHandler
-
 	self:RegisterEvent('PLAYER_LOGIN')
 end
 
@@ -96,9 +95,9 @@ function events:PLAYER_LOGIN(...)
 	if (not self.db.binds[spec]) then
 		saveBindings(self, spec)
 	end
-	self.spec = spec
 	self:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 	self:RegisterEvent('UPDATE_BINDINGS')
+	loadBindings(self, spec)
 end
 
 function events:PLAYER_REGEN_ENABLED(...)

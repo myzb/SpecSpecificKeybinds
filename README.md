@@ -45,6 +45,11 @@ be tracked by the addon.
 
 These mods usually use the default action bar buttons and add support for a few extra bars. Key bindings for buttons that belong to the default interface action bars are supported. Extra action bar buttons which are specific to the action bar mod are not.
 
+## FAQ
+
+Q: What about the 'Character Specific Key Bindings' toggle in the Key Bindings menu?  
+_A: You can check or un-check this option, it does not matter. It is not used by the addon._
+
 ## Feedback
 To give feedback or report a bug, please use the [issues](https://github.com/myzb/SpecSpecificKeybinds/issues)
 
