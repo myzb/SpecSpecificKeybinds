@@ -48,7 +48,7 @@ These mods usually use the default action bar buttons and add support for a few 
 ## FAQ
 
 Q: What about the 'Character Specific Key Bindings' toggle in the Key Bindings menu?  
-_A: You can check or un-check this option, it does not matter. It is not used by the addon._
+_A: The addon will save the current active key bindings as character bindings. This means that this toggle will be implicitly set._
 
 ## Feedback
 To give feedback or report a bug, please use the [issues](https://github.com/myzb/SpecSpecificKeybinds/issues)

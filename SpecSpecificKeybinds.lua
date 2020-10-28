@@ -4,6 +4,7 @@ local addon, events = CreateFrame('Frame', addonName), {}
 -- API Imports
 local SetBinding, GetBinding = SetBinding, GetBinding
 local GetSpecialization = GetSpecialization
+local CHARACTER_BINDINGS = 2
 
 -- -----------------------------------------------------------------------------
 -- > ADDON FUNCTIONS
@@ -44,7 +45,7 @@ local function loadBindings(self, spec)
 			end
 		end
 	end
-	SaveBindings(GetCurrentBindingSet())
+	SaveBindings(CHARACTER_BINDINGS)
 	self:RegisterEvent('UPDATE_BINDINGS')
 	print(string.format('|cffffff00Key Bindings set to Specialization: %s|r', name))
 end
