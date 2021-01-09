@@ -12,9 +12,9 @@ per specialization and/or support for macro and talent profiles.
 
 ## How to Use
 
-1. **Setting Keybinds:** Activate the specialization you want to set key bindings for, using the in-game talent menu. Set your binds as you would do normally, through the in-game key binding menu.
+1. **Setting Keybinds:** Using the in-game talent window, activate the specialization you want to set key bindings for. Set your binds using the key binding menu.
 
-1. **Loading Keybinds:** Activate the desired specialization using the in-game talent menu.
+1. **Loading Keybinds:** Using the in-game talent window, activate the desired specialization.
 
 _A message similar to the one bellow will be printed whenever key bindings change_
 
@@ -35,20 +35,27 @@ Key bindings will be saved locally within the __WTF__ folder of your game instal
 are stored on the game server. The location of your saved key binds is:
 ``WTF\Account\<account>\<realm>\<character>\SavedVariables\SpecSpecificKeybinds.lua``
 
-## Limitations
+## Compatibility & Limitations
 
 Only key bindings belonging to the standard blizzard interface are supported. These _usually_ are the ones you can set
-using the default blizzard key binding menu. Be aware that some mods extend the key binding menu. These bindings won't 
-be tracked by the addon. 
+using the default blizzard key binding menu. Be aware that some mods extend the key binding menu. Tracking key bindings
+for these extra options cannot be guaranteed as it depends on how the mod author programmed his addon.
 
-**Action Bar Mods (Dominos, Bartender, ..)**
+**Action Bar Mods (ElvUI, Dominos, Bartender, ..)**
 
-These mods usually use the default action bar buttons and add support for a few extra bars. Key bindings for buttons that belong to the default interface action bars are supported. Extra action bar buttons which are specific to the action bar mod are not.
+These mods usually use the default action bar buttons as base and add support for a few extra bars. Be aware that the default game only
+has 5 fully customizable action bars. Mods that add extra bars will have to properly register these extra bars with the game or SpecSpecificKeybinds won't know they exist. It also depends whether said action bar mod uses the default way of handling key bindings implemented by the game. Dominos fully works, with ElvUI only use bars 1,3,4,5,6.
 
 ## FAQ
 
 Q: What about the 'Character Specific Key Bindings' toggle in the Key Bindings menu?  
 _A: The addon will save the current active key bindings as character bindings. This means that this toggle will be implicitly set._
+
+Q: Why are (some) of my action bar key bindings not properly getting tracked?  
+_A: See the limitations. For mods like ElvUI use bars 1,3,4,5,6. Put things that don't have to change on a spec by spec basis on the other bars._
+
+Q: Can you add support for AddonName?  
+_A: SpecSpecificKeybinds use the default game functionality to set and retrieve key bindings. Addons that also make use of this mechanism will be supported by default. I don't plan to add special workarounds since it will cause dependencies and make the addon more complex. Keeping the addon short and concise will increase the chance of the addon staying compatible with future versions of WoW._
 
 ## Feedback
 To give feedback or report a bug, please use the [issues](https://github.com/myzb/SpecSpecificKeybinds/issues)
