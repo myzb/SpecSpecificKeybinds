@@ -37,14 +37,13 @@ are stored on the game server. The location of your saved key binds is:
 
 ## Compatibility & Limitations
 
-Only key bindings belonging to the standard blizzard interface are supported. These _usually_ are the ones you can set
-using the default blizzard key binding menu. Be aware that some mods extend the key binding menu. Tracking key bindings
-for these extra options cannot be guaranteed as it depends on how the mod author programmed his addon.
+All key bindings belonging to the standard blizzard interface and those showing up in the standard key binding menu (Esc -> Key Bindings) are supported.
 
 **Action Bar Mods (ElvUI, Dominos, Bartender, ..)**
 
-These mods usually use the default action bar buttons as base and add support for a few extra bars. Be aware that the default game only
-has 5 fully customizable action bars. Mods that add extra bars will have to properly register these extra bars with the game or SpecSpecificKeybinds won't know they exist. It also depends whether said action bar mod uses the default way of handling key bindings implemented by the game. Dominos fully works, with ElvUI only use bars 1,3,4,5,6.
+The default game only has 5 fully customizable bars. Most action bar mods re-use these 5 bars and add a few extra of their own. These mods will have to properly register their own bars with the game or SpecSpecificKeybinds won't know they exist. This is why the safe way to set key bindings is by using the default blizzard key binding menu (Esc -> Key Bindings). Avoid using 'Quick Binding' mode. If you do, double check that those bindings also appeared in the key bindings menu.
+
+For Dominos all 10 bars are supported. As of ElvUI v12.17 only use bars 1,2,3,4,5. Put bindings that stay the same across specs on the remaining bars. If an action bar mod gets updated and things change, you can always use the default blizzard key binding menu to find out which key binding corresponds to which bar/button.
 
 ## FAQ
 
@@ -52,7 +51,7 @@ Q: What about the 'Character Specific Key Bindings' toggle in the Key Bindings m
 _A: The addon will save the current active key bindings as character bindings. This means that this toggle will be implicitly set._
 
 Q: Why are (some) of my action bar key bindings not properly getting tracked?  
-_A: See the limitations. For mods like ElvUI use bars 1,3,4,5,6. Put things that don't have to change on a spec by spec basis on the other bars._
+_A: See the limitations. For mods like ElvUI use the default blizzard key binding menu (Esc -> Key Bindings) to set your bindings. Avoid using 'Quick Binding Mode' if you don't know what you are doing._
 
 Q: Can you add support for AddonName?  
 _A: SpecSpecificKeybinds use the default game functionality to set and retrieve key bindings. Addons that also make use of this mechanism will be supported by default. I don't plan to add special workarounds since it will cause dependencies and make the addon more complex. Keeping the addon short and concise will increase the chance of the addon staying compatible with future versions of WoW._
