@@ -1,4 +1,4 @@
-## Interface: 90002
+## Interface: 90005
 ## Title: Specialization Specific Keybinds
 ## Notes: Adds support for specialization specific keybinds
 ## Author: myzb
